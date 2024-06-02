@@ -1,10 +1,12 @@
 {
-  "name": "npm-ui",
-  "version": "0.1.0",
+  "name": "runners-ui",
+  "version": "0.0.1",
   "private": true,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "tsup stories/index.tsx",
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
@@ -43,6 +45,7 @@
     "prettier": "^3.3.0",
     "storybook": "^8.1.5",
     "tailwindcss": "^3.4.1",
+    "tsup": "^8.0.2",
     "typescript": "^5"
   }
 }

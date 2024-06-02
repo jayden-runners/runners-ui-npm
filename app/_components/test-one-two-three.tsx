@@ -1,8 +1,6 @@
 import React from "react"
 
-interface TestOneTwoThreeProps {
-  돌았다: boolean
-}
+interface TestOneTwoThreeProps {}
 
 const TestOneTwoThree = (props: TestOneTwoThreeProps) => {
   const {} = props
