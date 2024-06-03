@@ -3,7 +3,8 @@
     "source.fixAll.eslint": "explicit"
   },
   "cSpell.words": [
-    "clsx"
+    "clsx",
+    "tsup"
   ],
   "tailwindCSS.classAttributes": [
     ".*ClassName.*",
