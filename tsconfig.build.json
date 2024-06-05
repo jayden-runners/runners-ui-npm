@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./dist/types",
+    "rootDir": ".", // 프로젝트의 루트 디렉토리로 설정
+    "skipLibCheck": true
+  },
+  "include": ["./stories/index.tsx", "./app/lib/utils.ts"], // 필요한 파일만 포함
+}
