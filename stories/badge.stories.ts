@@ -1,13 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react"
-
-import Card from "./card"
+import Badge from "./badge"
 
 const meta = {
-  title: "Components/Card",
-  component: Card,
+  title: "Components/Badge",
+  component: Badge,
   tags: ["autodocs"],
-  argTypes: {},
-} satisfies Meta<typeof Card>
+  argTypes: {
+    color: {
+      control: "select",
+      options: ["primary", "gray", "red", "purple", "blue-green"],
+    },
+  },
+} satisfies Meta<typeof Badge>
 
 export default meta
 

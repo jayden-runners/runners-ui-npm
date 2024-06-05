@@ -13,7 +13,8 @@
     "jsx": "preserve",
     "incremental": true,
     "tsBuildInfoFile": "./.tsbuildinfo", // 추가: tsBuildInfoFile 설정
-
+    "declaration": true,
+    "declarationMap": true,
     "plugins": [
       {
         "name": "next"

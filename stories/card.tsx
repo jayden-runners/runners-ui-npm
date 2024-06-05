@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react"
 
-interface CardProps extends PropsWithChildren {}
+export interface CardProps extends PropsWithChildren {}
 
 const Card = (props: CardProps) => {
   const { children } = props

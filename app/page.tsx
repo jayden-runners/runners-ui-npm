@@ -1,3 +1,4 @@
+import { Card, Input } from "@/stories"
 import Header from "./_components/header"
 import HeaderFooterWrapper from "./_components/header-footer-wrapper"
 
@@ -6,7 +7,17 @@ export default function Home() {
     <>
       <Header />
       <main>
-        <HeaderFooterWrapper>여기서 테스트</HeaderFooterWrapper>
+        <HeaderFooterWrapper>
+          여기서 테스트
+          <Card>
+            <Input placeholder="test1" size="32" className="w-full" />
+            <Input placeholder="test1" size="40" />
+            <Input placeholder="test1" size="48" />
+            <Input placeholder="test1" size="32" disabled />
+            <Input placeholder="test1" size="40" disabled />
+            <Input placeholder="test1" size="48" disabled />
+          </Card>
+        </HeaderFooterWrapper>
       </main>
     </>
   )

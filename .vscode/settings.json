@@ -4,12 +4,21 @@
   },
   "cSpell.words": [
     "clsx",
+    "tailwindcss",
     "tsup"
   ],
   "tailwindCSS.classAttributes": [
     ".*ClassName.*",
     ".*ClassNames.*",
     ".*classNames.*",
+    ".*variants.*",
+    ".*Variants.*",
     // ".*CLASS.*",
   ],
+
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["classNames\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ]
 }

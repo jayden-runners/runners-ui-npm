@@ -9,6 +9,14 @@
   "plugins": ["tailwindcss", "import", "unused-imports"],
   "rules": {
     // eslint config
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "tailwindcss/no-custom-classname": "warn",
+    "tailwindcss/classnames-order": ["warn", { "callees": ["classNames", "classnames", "clsx", "ctl", "cva", "twMerge", "tv"] }],
+    "tailwindcss/enforces-shorthand": [
+      "warn",
+      {
+        "callees": ["classNames", "classnames", "clsx", "ctl", "cva", "twMerge", "tv"]
+      }
+    ]
   }
 }

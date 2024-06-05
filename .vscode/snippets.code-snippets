@@ -18,9 +18,12 @@
       "rafce kebab case component template": {
         "prefix": "rrr",
         "body": [
+          "import { cva } from \"class-variance-authority\"",
           "import React from \"react\"",
           "",
-          "interface ${1:${TM_FILENAME_BASE/^([a-z])|-(\\w)/${1:/upcase}${2:/upcase}/g}}Props {",
+          "const ${TM_FILENAME_BASE}Variants = cva(\"\")",
+          "",
+          "export interface ${1:${TM_FILENAME_BASE/^([a-z])|-(\\w)/${1:/upcase}${2:/upcase}/g}}Props {",
           "  ${2:props}",
           "}",
           "",
