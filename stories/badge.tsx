@@ -8,6 +8,7 @@ const badgeVariants = cva("w-fit px-1.5 py-0.5 text-12", {
       primary: "bg-primary-100 text-primary",
       red: "bg-error-100 text-error-500",
       gray: "bg-gray-100 text-gray-500",
+      green: "bg-success-100 text-success-500",
       /**
        * legacy design guide
        */
@@ -18,6 +19,7 @@ const badgeVariants = cva("w-fit px-1.5 py-0.5 text-12", {
       primary: "border border-primary bg-white text-primary",
       red: "border border-error-400 bg-white text-error-400",
       gray: "border border-gray-500 bg-white text-gray-500",
+      green: "border border-success-500 bg-white text-success-500",
 
       /**
        * legacy design guide
