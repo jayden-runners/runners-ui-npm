@@ -40,6 +40,9 @@ export interface BadgeProps
   outline?: boolean
 }
 
+/**
+ * D-Day, 상품정보 등 포인트를 주기위한 컴포넌트
+ */
 const Badge = ({
   children,
   color = "primary",
