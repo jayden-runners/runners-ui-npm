@@ -32,6 +32,9 @@ const meta = {
     outline: {
       control: "boolean",
     },
+    loading: {
+      control: "boolean",
+    },
   },
 } satisfies Meta<typeof Button>
 

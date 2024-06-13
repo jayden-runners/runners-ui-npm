@@ -4,7 +4,7 @@ import React from "react"
 import { CalendarIcon } from "./assets"
 
 const inputVariants = cva(
-  "rounded-1 border border-gray-300 px-4 text-gray-900 transition-colors placeholder:text-gray-500 focus:outline-2 focus:outline-state focus-visible:outline-2 focus-visible:outline-state",
+  "rounded-1 border border-gray-300 px-4 text-gray-900 transition-colors placeholder:text-gray-500 focus-visible:outline focus-visible:outline-state",
   {
     variants: {
       disabled: {

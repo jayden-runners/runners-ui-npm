@@ -17,6 +17,10 @@ const buttonVariants = cva(
         primary:
           "border border-primary bg-white text-primary disabled:border-gray-400 disabled:text-gray-400",
       },
+      loading: {
+        true: "pointer-events-none cursor-wait opacity-70",
+        false: "",
+      },
       size: {
         "56": "h-[56px] py-4 text-16",
         "48": "h-12 py-[14px] text-14",
@@ -39,6 +43,7 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants>,
     PropsWithChildren {
   outline?: boolean
+  loading?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -48,6 +53,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size = "40",
       color = "primary",
       outline = false,
+      loading = false,
       className,
       ...props
     },
@@ -59,6 +65,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           buttonVariants({
             size,
+            loading,
             ...(outline ? { outlineColor: color } : { color }),
           }),
           className,

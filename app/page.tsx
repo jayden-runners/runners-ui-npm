@@ -1,7 +1,6 @@
-import { Card, Input } from "@/stories"
+import { Button, Card, Input } from "@/stories"
 import Header from "./_components/header"
 import HeaderFooterWrapper from "./_components/header-footer-wrapper"
-import { CalendarIcon } from "@/public/icons"
 
 export default function Home() {
   return (
@@ -22,6 +21,8 @@ export default function Home() {
               disabled
               // suffix={<CalendarIcon />}
             />
+
+            <Button loading>Submit</Button>
           </Card>
         </HeaderFooterWrapper>
       </main>
