@@ -1,6 +1,7 @@
 import { Button, Card, Input } from "@/stories"
 import Header from "./_components/header"
 import HeaderFooterWrapper from "./_components/header-footer-wrapper"
+import { CalendarIcon } from "@/public/icons"
 
 export default function Home() {
   return (
@@ -19,7 +20,7 @@ export default function Home() {
               placeholder="test1"
               size="48"
               disabled
-              // suffix={<CalendarIcon />}
+              suffix={<CalendarIcon className="size-6" />}
             />
 
             <Button loading>Submit</Button>

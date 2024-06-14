@@ -1,6 +1,6 @@
 {
   "name": "runners-ui",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "private": false,
   "module": "dist/index.mjs",
   "main": "dist/index.js",
@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "dev": "next dev",
-    "build": "tsup",
+    "build": "tailwindcss -i ./app/globals.css -o ./dist/runners.css && tsup",
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",

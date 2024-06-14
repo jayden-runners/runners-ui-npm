@@ -1,10 +1,9 @@
 import { cn } from "@/app/lib/utils"
 import { cva } from "class-variance-authority"
 import React from "react"
-import { CalendarIcon } from "./assets"
 
 const inputVariants = cva(
-  "rounded-1 border border-gray-300 px-4 text-gray-900 transition-colors placeholder:text-gray-500 focus-visible:outline focus-visible:outline-state",
+  "rounded-1 border border-gray-300 px-4 text-gray-900 transition-colors placeholder:text-gray-500 focus:outline focus:outline-state",
   {
     variants: {
       disabled: {
@@ -12,6 +11,7 @@ const inputVariants = cva(
       },
       isError: {
         true: "border-error-500",
+        false: "",
       },
       size: {
         "32": "h-8 py-1.5 text-12",
@@ -46,45 +46,30 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     }: InputProps,
     ref,
   ) => {
-    if (suffix) {
-      return (
-        <label className="relative">
-          <input
-            ref={ref}
-            type={type}
-            className={cn(
-              inputVariants({
-                size,
-                disabled,
-                isError,
-              }),
-              className,
-            )}
-            disabled={disabled}
-            {...props}
-          />
-          <div className="absolute inset-y-0 right-0 flex items-center pr-4">
-            {suffix}
-          </div>
-        </label>
-      )
-    }
-
     return (
-      <input
-        ref={ref}
-        type={type}
-        className={cn(
-          inputVariants({
-            size,
-            disabled,
-            isError,
-          }),
-          className,
-        )}
-        disabled={disabled}
-        {...props}
-      />
+      <label className="relative">
+        <input
+          ref={ref}
+          type={type}
+          className={cn(
+            inputVariants({
+              size,
+              disabled,
+              isError,
+            }),
+            className,
+          )}
+          disabled={disabled}
+          {...props}
+        />
+        <div
+          className={cn("absolute inset-y-0 right-0 flex items-center pr-4", {
+            hidden: !suffix,
+          })}
+        >
+          {suffix}
+        </div>
+      </label>
     )
   },
 )
