@@ -46,30 +46,45 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     }: InputProps,
     ref,
   ) => {
+    if (suffix) {
+      return (
+        <label className="relative">
+          <input
+            ref={ref}
+            type={type}
+            className={cn(
+              inputVariants({
+                size,
+                disabled,
+                isError,
+              }),
+              className,
+            )}
+            disabled={disabled}
+            {...props}
+          />
+          <div className="absolute inset-y-0 right-0 flex items-center pr-4">
+            {suffix}
+          </div>
+        </label>
+      )
+    }
+
     return (
-      <label className="relative">
-        <input
-          ref={ref}
-          type={type}
-          className={cn(
-            inputVariants({
-              size,
-              disabled,
-              isError,
-            }),
-            className,
-          )}
-          disabled={disabled}
-          {...props}
-        />
-        <div
-          className={cn("absolute inset-y-0 right-0 flex items-center pr-4", {
-            hidden: !suffix,
-          })}
-        >
-          {suffix}
-        </div>
-      </label>
+      <input
+        ref={ref}
+        type={type}
+        className={cn(
+          inputVariants({
+            size,
+            disabled,
+            isError,
+          }),
+          className,
+        )}
+        disabled={disabled}
+        {...props}
+      />
     )
   },
 )

@@ -23,12 +23,12 @@ export default defineConfig({
     )
     fs.writeFileSync("./dist/index.js", modifiedEsmJsContent)
 
-    // const mjsJsContent = fs.readFileSync("dist/index.mjs", "utf-8")
-    // const modifiedCjsJsContent = mjsJsContent.replace(
-    //   '"use strict";',
-    //   `"use strict";${cssImportStatement}`,
-    // )
-    // fs.writeFileSync("./dist/index.mjs", modifiedCjsJsContent)
+    const mjsJsContent = fs.readFileSync("dist/index.mjs", "utf-8")
+    const modifiedCjsJsContent = mjsJsContent.replace(
+      'from"tailwind-merge";',
+      `from"tailwind-merge";${cssImportStatement}`,
+    )
+    fs.writeFileSync("./dist/index.mjs", modifiedCjsJsContent)
 
     console.log("Build complete with CSS import.")
   },
