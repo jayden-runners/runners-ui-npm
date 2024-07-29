@@ -18,6 +18,8 @@ interface HeaderFooterWrapperProps extends PropsWithChildren {
  * @param {string} [props.layoutClassName] - 외부 div의 padding, margin 등을 커스텀 해야할때 사용
  * @param {boolean} [props.topUpButton] - 탑업버튼 여부
  * @param {boolean} [props.clearGap] - 외부 div의 최소한의 width, height를 제외하고 나머지 스타일을 지움
+ *
+ * dfdf
  */
 const HeaderFooterWrapper = (props: HeaderFooterWrapperProps) => {
   const { children, className, layoutClassName, clearGap } = props
