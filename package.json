@@ -1,6 +1,6 @@
 {
   "name": "runners-ui",
-  "version": "",
+  "version": "..1",
   "private": false,
   "main": "dist/index.mjs",
   "types": "dist/index.d.mts",
