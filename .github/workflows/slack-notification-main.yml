@@ -1,9 +1,9 @@
 name: Slack Notification Main Branch
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ['Tag Versioning']
+    types: ['completed']
       
 jobs:
   send-slack-notification:
