@@ -48,6 +48,8 @@ jobs:
           echo "::set-output name=new_version::$NEW_VERSION"
 
       - name: Create a new commit with the bumped version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
@@ -59,6 +61,8 @@ jobs:
           git push origin main
 
       - name: Create a new tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           NEW_VERSION=${{ steps.bump_version.outputs.new_version }}
           git tag "v$NEW_VERSION"
