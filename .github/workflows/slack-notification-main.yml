@@ -4,7 +4,7 @@ name: Slack Notification Main Branch
 on:
   push:
     tags:
-      - '*'  # 모든 태그 푸시 이벤트를 처리
+      - 'v*'  # 모든 태그 푸시 이벤트를 처리
       
 jobs:
   send-slack-notification:
