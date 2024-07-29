@@ -1,0 +1,36 @@
+name: slack-notification-main
+
+inputs:
+  status:
+    required: false
+    default: "failure"
+  slack_incoming_url:
+    required: true
+  github_token:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Send slack
+      shell: bash
+      run: |
+        echo "Running Slack notification script..."
+        echo "GITHUB_REF: ${GITHUB_REF}"
+        echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
+        echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+
+        if [[ "${GITHUB_REF}" == "refs/heads/dev" ]]; then
+          echo "Detected dev branch push"
+          EMOTICON="🚀"
+          MSG="{ \"text\":\"${EMOTICON} \`main\` branch has been pushed by \`${GITHUB_ACTOR}\`. <https://github.com/SENSE-IM/sense-turbo/releases|View Release Notes>\" }"
+        else
+          echo "Deployment failed for an unknown reason"
+          EMOTICON="⛔"
+          MSG="{ \"text\":\"${EMOTICON} Deployment failed for \`${GITHUB_REF_NAME}\` branch pushed by \`${GITHUB_ACTOR}\`.\" }"
+        fi
+
+        curl -X POST -H 'Content-type: application/json' --data "${MSG}" "${{ inputs.slack_incoming_url }}" -v --fail || {
+          echo "Failed to send message to Slack"
+          exit 1
+        }
