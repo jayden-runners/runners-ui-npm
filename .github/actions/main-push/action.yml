@@ -11,7 +11,17 @@ inputs:
 
 runs:
   using: "composite"
+
   steps:
+    - name: Fetch the most recent tag
+      shell: bash
+      run: |
+        echo "Fetching the most recent tag..."
+        LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+        echo "Latest tag: ${LATEST_TAG}"
+        echo "LATEST_TAG=${LATEST_TAG}" >> $GITHUB_ENV
+
+
     - name: Send slack
       shell: bash
       run: |
@@ -19,11 +29,12 @@ runs:
         echo "GITHUB_REF: ${GITHUB_REF}"
         echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
         echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+        echo "LATEST_TAG: ${LATEST_TAG}"
 
         if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
           echo "Detected main branch push"
-          EMOTICON="🚀"
-          MSG="{ \"text\":\"${EMOTICON} \`main\` branch has been pushed by \`${GITHUB_ACTOR}\`. [View Release Notes](https://github.com/SENSE-IM/sense-turbo/releases)\" }"
+          EMOTICON="✅"
+          MSG="{ \"text\":\"${EMOTICON} \`main\` branch has been pushed. [${LATEST_TAG}](https://github.com/SENSE-IM/sense-turbo/releases)\" }"
         else
           echo "Deployment failed for an unknown reason"
           EMOTICON="⛔"
