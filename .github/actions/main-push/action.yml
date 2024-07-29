@@ -14,7 +14,9 @@ runs:
 
   steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Fetch all history for all tags and branches
 
     - name: Fetch the most recent tag
       id: get_latest_tag
