@@ -1,8 +1,9 @@
-name: Changelog
+name: Generate Changelog
 on:
-  release:
-    types:
-      - created
+  workflow_run:
+    workflows: ["Tag Versioning"]
+    types: [completed]
+      
 jobs:
   changelog:
     runs-on: ubuntu-latest
