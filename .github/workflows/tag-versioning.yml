@@ -20,10 +20,26 @@ jobs:
           echo "Current version: $CURRENT_VERSION"
           echo "::set-output name=current_version::$CURRENT_VERSION"
 
+      - name: Bump version
+        id: bump_version
+        run: |
+          # Extract the current version numbers
+          IFS='.' read -r -a VERSION_PARTS <<< "${{ steps.get_version.outputs.current_version }}"
+          MAJOR=${VERSION_PARTS[0]}
+          MINOR=${VERSION_PARTS[1]}
+          PATCH=${VERSION_PARTS[2]}
+
+          # Increment the PATCH version
+          NEW_PATCH=$((PATCH + 1))
+          NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
+
+          echo "New version: $NEW_VERSION"
+          echo "::set-output name=new_version::$NEW_VERSION"
+
       - name: Create a new commit with the bumped version
         run: |
-          git config --global user.name 'jayden-runners'
-          git config --global user.email 'jayden@runners.im'
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           NEW_VERSION=${{ steps.bump_version.outputs.new_version }}
           echo "Bumping version to $NEW_VERSION"
           jq ".version = \"$NEW_VERSION\"" package.json > package.tmp.json && mv package.tmp.json package.json
