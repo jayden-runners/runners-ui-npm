@@ -19,7 +19,7 @@ jobs:
           node-version: 20
 
       - name: Send Slack Notification
-        uses: ./.github/actions/main-push
+        uses: ./.github/actions/slack-notification
         with:
           slack_incoming_url: ${{ secrets.SLACK_INCOMING_URL }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
