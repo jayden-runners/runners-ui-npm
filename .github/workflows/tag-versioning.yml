@@ -52,11 +52,3 @@ jobs:
           NEW_VERSION=${{ steps.bump_version.outputs.new_version }}
           git tag "v$NEW_VERSION"
           git push origin "v$NEW_VERSION"
-
-      - name: Update Release
-        uses: release-drafter/release-drafter@v5
-        with:
-          config-name: release-drafter-config.yml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
