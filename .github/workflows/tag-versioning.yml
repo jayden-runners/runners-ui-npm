@@ -22,8 +22,8 @@ jobs:
 
       - name: Create a new commit with the bumped version
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config --global user.name 'jayden-runners'
+          git config --global user.email 'jayden@runners.im'
           NEW_VERSION=${{ steps.bump_version.outputs.new_version }}
           echo "Bumping version to $NEW_VERSION"
           jq ".version = \"$NEW_VERSION\"" package.json > package.tmp.json && mv package.tmp.json package.json
