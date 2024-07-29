@@ -1,9 +1,10 @@
 name: Slack Notification Main Branch
 
+
 on:
-  workflow_run:
-    workflows: ['Tag Versioning']
-    types: ['completed']
+  push:
+    tags:
+      - '*'  # 모든 태그 푸시 이벤트를 처리
       
 jobs:
   send-slack-notification:
