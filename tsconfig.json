@@ -10,7 +10,7 @@
     "strict": true,
     "noEmit": false, // 변경: noEmit을 false로 설정
     "esModuleInterop": true,
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,

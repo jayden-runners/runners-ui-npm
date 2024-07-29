@@ -20,7 +20,6 @@ const badgeVariants = cva("w-fit px-1.5 py-0.5 text-12", {
       red: "border border-error-400 bg-white text-error-400",
       gray: "border border-gray-500 bg-white text-gray-500",
       green: "border border-success-500 bg-white text-success-500",
-
       /**
        * legacy design guide
        */
