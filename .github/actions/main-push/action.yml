@@ -13,17 +13,22 @@ runs:
   using: "composite"
 
   steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
     - name: Fetch the most recent tag
+      id: get_latest_tag
       shell: bash
       run: |
         echo "Fetching the most recent tag..."
         LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
         echo "Latest tag: ${LATEST_TAG}"
-        echo "LATEST_TAG=${LATEST_TAG}" >> $GITHUB_ENV
-
+        echo "::set-output name=LATEST_TAG::${LATEST_TAG}"
 
     - name: Send slack
       shell: bash
+      env:
+        LATEST_TAG: ${{ steps.get_latest_tag.outputs.LATEST_TAG }}
       run: |
         echo "Running Slack notification script..."
         echo "GITHUB_REF: ${GITHUB_REF}"
@@ -34,7 +39,7 @@ runs:
         if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
           echo "Detected main branch push"
           EMOTICON="✅"
-          MSG="{ \"text\":\"${EMOTICON} \`main\` branch has been pushed. [${LATEST_TAG}](https://github.com/SENSE-IM/sense-turbo/releases)\" }"
+          MSG="{ \"text\":\"${EMOTICON} \`main\` branch has been pushed by \`${GITHUB_ACTOR}\`. The latest tag is \`${LATEST_TAG}\`. <https://github.com/SENSE-IM/sense-turbo/releases|View Release Notes>\" }"
         else
           echo "Deployment failed for an unknown reason"
           EMOTICON="⛔"
