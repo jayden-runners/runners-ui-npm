@@ -3,12 +3,13 @@ tag-template: 'v$RESOLVED_VERSION'
 categories:
   - title: '🚀 Features'
     label: 'enhancement'
-  - title: '🐛 Hotfixes'
+  - title: '🐛 Bug Fixed'
     label: 'bug'
   - title: 'ETC'
     label: 'documentation'
 change-template: '- $TITLE #$NUMBER @$AUTHOR '
 template: |
-  ## Uncategorized
+  ## What's Changed
   $CHANGES
-  ### Bump setup.py version must be included here!
+
+  **Full Changelog**: https://github.com/SENSE-IM/sense-turbo/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
