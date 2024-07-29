@@ -24,10 +24,12 @@ runs:
         echo "Fetching the most recent tag..."
         LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
         echo "Latest tag: ${LATEST_TAG}"
-        echo "::set-output name=LATEST_TAG::${LATEST_TAG}"
+        echo "LATEST_TAG=${LATEST_TAG}" >> $GITHUB_ENV
 
     - name: Send slack
       shell: bash
+      env:
+        LATEST_TAG: ${{ steps.get_latest_tag.outputs.LATEST_TAG }}
       run: |
         echo "Running Slack notification script..."
         echo "GITHUB_REF: ${GITHUB_REF}"
@@ -37,8 +39,15 @@ runs:
         if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
           TAG_NAME="${GITHUB_REF#refs/tags/}"
           echo "Detected tag push: ${TAG_NAME}"
-          EMOTICON="✅"
-          MSG="{ \"text\":\"${EMOTICON} Tag \`${TAG_NAME}\` has been pushed. <https://github.com/SENSE-IM/sense-turbo/releases|View Release Notes>\" }"
+          # 태그가 main 브랜치와 연관되어 있는지 확인
+          BASE_BRANCH=$(git branch -r --contains "tags/${TAG_NAME}" | grep "origin/main" | wc -l)
+          if [[ $BASE_BRANCH -gt 0 ]]; then
+            EMOTICON="🚀"
+            MSG="{ \"text\":\"${EMOTICON} Tag \`${TAG_NAME}\` related to \`main\` branch has been pushed by \`${GITHUB_ACTOR}\`. <https://github.com/SENSE-IM/sense-turbo/releases|View Release Notes>\" }"
+          else
+            EMOTICON="✅"
+            MSG="{ \"text\":\"${EMOTICON} Tag \`${TAG_NAME}\` has been pushed. <https://github.com/SENSE-IM/sense-turbo/releases|View Release Notes>\" }"
+          fi
         elif [[ "${GITHUB_REF}" == "refs/heads/dev" ]]; then
           if [[ "${{ inputs.status }}" == "success" ]]; then
             echo "Detected dev branch push with success status"
@@ -47,16 +56,16 @@ runs:
             PR_TITLE=$(echo "$PR_RESPONSE" | grep -oP '(?<="title":")[^"]*')
             PR_URL=$(echo "$PR_RESPONSE" | grep -oP '(?<="html_url":")[^"]*')
             EMOTICON="🎉"
-            MSG="{ \"text\":\"${EMOTICON} \`${GITHUB_REF_NAME}\` branch has been successfully pushed. [${PR_TITLE}](${PR_URL}) - \`${GITHUB_ACTOR}\`\" }"
+            MSG="{ \"text\":\"${EMOTICON} \`dev\` branch has been successfully pushed. [${PR_TITLE}](${PR_URL}) - \`${GITHUB_ACTOR}\`\" }"
           else
             echo "Detected dev branch push with failure status"
             EMOTICON="⛔"
-            MSG="{ \"text\":\"${EMOTICON} Deployment failed for \`${GITHUB_REF_NAME}\` branch pushed by \`${GITHUB_ACTOR}\`.\" }"
+            MSG="{ \"text\":\"${EMOTICON} Deployment failed for \`dev\` branch pushed by \`${GITHUB_ACTOR}\`.\" }"
           fi
         else
           echo "Deployment failed for an unknown reason"
           EMOTICON="⛔"
-          MSG="{ \"text\":\"${EMOTICON} Deployment failed for \`${GITHUB_REF_NAME}\` branch pushed by \`${GITHUB_ACTOR}\`.\" }"
+          MSG="{ \"text\":\"${EMOTICON} Deployment failed for \`${GITHUB_REF}\` branch pushed by \`${GITHUB_ACTOR}\`.\" }"
         fi
 
         echo "Sending message to Slack: $MSG"
