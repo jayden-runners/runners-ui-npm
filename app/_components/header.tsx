@@ -13,6 +13,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/stories"
 
+// test
 export const NAVIGATION_MENU = [
   {
     name: "홈",
@@ -54,13 +55,13 @@ const Header = (props: HeaderProps) => {
       )}
     >
       <div className="z-[1] flex w-full max-w-5xl items-center justify-between">
-        <div className="mobile:hidden flex items-center gap-6">
+        <div className="flex items-center gap-6 mobile:hidden">
           <div className="box-content flex h-12 w-[118px] cursor-pointer">
             <SenseBetaLogo className={cn("size-full text-primary")} />
           </div>
 
           <div className="flex flex-col">
-            <div className="mobile:hidden flex gap-3">
+            <div className="flex gap-3 mobile:hidden">
               {NAVIGATION_MENU.filter((item) => item.name !== "홈").map(
                 (item) => {
                   return (
