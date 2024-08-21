@@ -51,7 +51,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*푸시한 사람:* ${{ env.PUSH_AUTHOR }}\n*링크:* <$PR_URL|PR 보기>"
+                    "text": "dev 브랜치 버전이 변경되었습니다. 작업분을 merge/pull 후 진행해주세요.\n\n*푸시한 사람:* ${{ env.PUSH_AUTHOR }}"
                   }
                 },
                 {
