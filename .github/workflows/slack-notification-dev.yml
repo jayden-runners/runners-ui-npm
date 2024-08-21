@@ -42,13 +42,13 @@ jobs:
           channel-id: ${{ secrets.SLACK_DEPLOY_CHANNEL_ID }}
           payload: |
             {
-              "text": "PR #${{ env.PR_NUMBER }} - `${{ env.PR_TITLE }}` 가 dev 브랜치에 제출되었습니다.",
+              "text": "PR #${{ env.PR_NUMBER }} - \"${{ env.PR_TITLE }}\" 가 dev 브랜치에 제출되었습니다.",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*PR 제목:* `${{ env.PR_TITLE }}`\n*PR 링크:* <${{ env.PR_URL }}>\n*멘션된 사람:* `${{ env.PR_MENTIONED_USERS }}`
+                    "text": "*PR 제목:* \"${{ env.PR_TITLE }}\"\n*PR 링크:* <${{ env.PR_URL }}>\n*멘션된 사람:* \"${{ env.PR_MENTIONED_USERS }}\""
                   }
                 },
                 {
