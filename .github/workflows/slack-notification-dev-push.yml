@@ -1,14 +1,6 @@
-name: Slack Notification for PR and dev branch push
+name: Slack Notification for dev branch push
 
 on:
-  # PR이 dev 브랜치로 머지될 때
-  pull_request:
-    branches:
-      - dev
-    types:
-      - closed
-
-  # dev 브랜치에 직접 푸시될 때
   push:
     branches:
       - dev
@@ -21,17 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set event information
-        if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
-        id: set_event_info
-        run: |
-          echo "PR_NUMBER=${{ github.event.number }}" >> $GITHUB_ENV
-          echo "PR_TITLE=\"${{ github.event.pull_request.title }}\"" >> $GITHUB_ENV
-          echo "PR_URL=${{ github.event.pull_request.html_url }}" >> $GITHUB_ENV
-          echo "PUSH_AUTHOR=${{ github.event.pull_request.user.login }}" >> $GITHUB_ENV
-
       - name: Set push information
-        if: github.event_name == 'push'
         id: set_push_info
         run: |
           echo "PUSH_AUTHOR=${{ github.actor }}" >> $GITHUB_ENV
@@ -45,13 +27,13 @@ jobs:
           channel-id: ${{ secrets.SLACK_DEPLOY_CHANNEL_ID }}
           payload: |
             {
-              "text": "${{ env.PUSH_AUTHOR }} 가 dev 브랜치 push!",
+              "text": "${{ env.PUSH_AUTHOR }} 가 dev 브랜치에 코드를 푸시했습니다.",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "dev 브랜치 버전이 변경되었습니다. 작업분을 merge/pull 후 진행해주세요.\n\n*푸시한 사람:* ${{ env.PUSH_AUTHOR }}"
+                    "text": "dev 브랜치 버전이 변경되었습니다. 작업분을 merge/pull 후 진행해주세요.\n\n*푸시한 사람:* ${{ env.PUSH_AUTHOR }}\n*PR 링크:* <${{ env.PR_URL }}>"
                   }
                 },
                 {
