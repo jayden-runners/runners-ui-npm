@@ -20,9 +20,15 @@ jobs:
         id: get_pr_info
         run: |
           PR_NUMBER=${{ github.event.number }}
-          PR_TITLE=${{ github.event.pull_request.title }}
+          PR_TITLE="${{ github.event.pull_request.title }}"
           PR_URL=${{ github.event.pull_request.html_url }}
-          PR_MENTIONED_USERS=$(jq -r '.pull_request.requested_reviewers | map(.login) | join(", ")' <<< "${{ toJSON(github.event) }}")
+          PR_MENTIONED_USERS=$(echo "${{ github.event.pull_request.requested_reviewers[*].login }}" | tr '\n' ', ')
+
+          # Handle empty PR_MENTIONED_USERS case
+          if [ -z "$PR_MENTIONED_USERS" ]; then
+            PR_MENTIONED_USERS="없음"
+          fi
+
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
           echo "PR_TITLE=$PR_TITLE" >> $GITHUB_ENV
           echo "PR_URL=$PR_URL" >> $GITHUB_ENV
