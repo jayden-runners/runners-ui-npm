@@ -1,0 +1,73 @@
+name: Slack Notification for PR and dev branch push
+
+on:
+  # PR이 dev 브랜치로 머지될 때
+  pull_request:
+    branches:
+      - dev
+    types:
+      - closed
+
+  # dev 브랜치에 직접 푸시될 때
+  push:
+    branches:
+      - dev
+
+jobs:
+  send-slack-notification:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set event information
+        if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+        id: set_event_info
+        run: |
+          echo "PR_NUMBER=${{ github.event.number }}" >> $GITHUB_ENV
+          echo "PR_TITLE=\"${{ github.event.pull_request.title }}\"" >> $GITHUB_ENV
+          echo "PR_URL=${{ github.event.pull_request.html_url }}" >> $GITHUB_ENV
+          echo "PUSH_AUTHOR=${{ github.event.pull_request.user.login }}" >> $GITHUB_ENV
+
+      - name: Set push information
+        if: github.event_name == 'push'
+        id: set_push_info
+        run: |
+          echo "PUSH_AUTHOR=${{ github.actor }}" >> $GITHUB_ENV
+          echo "PR_URL=https://github.com/${{ github.repository }}/compare/${{ github.event.before }}...${{ github.sha }}" >> $GITHUB_ENV
+
+      - name: Send Slack Notification
+        uses: slackapi/slack-github-action@v1.26.0
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        with:
+          channel-id: ${{ secrets.SLACK_DEPLOY_CHANNEL_ID }}
+          payload: |
+            {
+              "text": "${{ env.PUSH_AUTHOR }} 가 dev 브랜치 push!",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*푸시한 사람:* ${{ env.PUSH_AUTHOR }}\n*링크:* <$PR_URL|PR 보기>"
+                  }
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "emoji": true,
+                        "text": "PR 보기"
+                      },
+                      "url": "${{ env.PR_URL }}",
+                      "value": "view_pr"
+                    }
+                  ]
+                }
+              ]
+            }
